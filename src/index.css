@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+}
+.resume {
+  font-family: "Nunito Sans", sans-serif;
+  padding: 4px;
+}
+ul {
+  padding-left: 16px;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+.title {
+  font-size: 48px;
+  font-weight: 300;
+  width: 400px;
+  line-height: 100%;
+  padding-bottom: 12px;
+  /* background-color: red; */
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.boldText {
+  font-weight: 700;
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 5mm;
+  }
+  body {
+    visibility: hidden;
+  }
+  .resume {
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
