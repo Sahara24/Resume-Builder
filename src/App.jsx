@@ -1,42 +1,22 @@
-import { Checkbox, FormControlLabel, Stack } from "@mui/material";
-import ResumeForm from "./components/ResumeForm";
-import { useDispatch, useSelector } from "react-redux";
-import { showResume } from "./slices/resumeSlice";
-import Resume from "./components/Resume";
+import { Route, Routes } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
 import ResumeBuilder from "./pages/ResumeBuilder";
-import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Stack sx={{ maxWidth: "2480px", margin: "auto" }}>
-        <ResumeBuilder />
-        {/* <Stack
-      sx={{ width: "100%" }}
-      direction="row"
-      justifyContent="space-between"
-    >
-      <h1>Resume Builder</h1>
-      <FormControlLabel
-        control={
-          <Checkbox
-            onChange={(e) => {
-              dispatch(showResume(e.target.checked));
-            }}
-          />
-        }
-        label="Preview"
-      />
-    </Stack>
-    {resumeStore?.showResume ? (
-      <Resume />
-    ) : (
-      <Stack sx={{ maxWidth: "600px", margin: "auto" }}>
-        <ResumeForm />
-      </Stack>
-    )} */}
-      </Stack>
+      <Routes>
+        <Route path="/" element={<ResumeBuilder />} />
+        <Route
+          path="*"
+          element={
+            <div className="text-red-600 text-center text-4xl p-10">
+              Page Not Found
+            </div>
+          }
+        />
+      </Routes>
     </>
   );
 }
