@@ -11,7 +11,7 @@ export function Resume({ className }) {
         sx={{ width: "30%", borderRight: "2px solid black" }}
         spacing={2}
       >
-        <Stack sx={{ fontSize: "14px" }} spacing={0.5}>
+        <Stack sx={{ fontSize: "14px" }} spacing={0.5} maxWidth={"240px"}>
           <strong>{data?.email}</strong>
           <strong>{data?.phone}</strong>
           <strong>{data?.address}</strong>

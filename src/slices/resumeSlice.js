@@ -113,6 +113,7 @@ const emptyState = {
 const initialState = {
   value: myResume,
   showResume: false,
+  preview: false,
 };
 
 export const resumeSlice = createSlice({
@@ -125,6 +126,9 @@ export const resumeSlice = createSlice({
     showResume: (state, action) => {
       state.showResume = action.payload;
     },
+    handlePreview: (state, action) => {
+      state.preview = action.payload;
+    },
     handleCurrrentlyWorking: (state, action) => {
       const index = action.payload?.index;
       state.value.experience[index] = action?.payload?.isChecked;
@@ -133,7 +137,7 @@ export const resumeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addValues, showResume, handleCurrrentlyWorking } =
+export const { addValues, showResume, handlePreview, handleCurrrentlyWorking } =
   resumeSlice.actions;
 
 export default resumeSlice.reducer;
