@@ -113,7 +113,7 @@ const emptyState = {
 const initialState = {
   value: myResume,
   showResume: false,
-  preview: false,
+  preview: true,
 };
 
 export const resumeSlice = createSlice({
