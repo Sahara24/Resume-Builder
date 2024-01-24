@@ -1,75 +1,120 @@
 import { Button, Stack, TextField } from "@mui/material";
-import { FieldArray, FastField } from "formik";
-import React, { Fragment, memo } from "react";
+import { Controller, useFieldArray } from "react-hook-form";
+import React, { Fragment, memo, useEffect } from "react";
+import { addEmail, addName, addValues } from "../../slices/resumeSlice";
+import { useDispatch } from "react-redux";
 
-export const BasicDetails = memo(function BasicDetails({ values }) {
+export const BasicDetails = memo(function BasicDetails({
+  values,
+  control,
+  watch,
+}) {
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control, // control props comes from useForm (optional: if you are using FormContext)
+      name: "websites", // unique name for your Field Array
+    }
+  );
+  const dispatch = useDispatch();
+
+  console.log("render");
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      switch (name) {
+        case "name":
+          dispatch(addName(value?.name));
+          return;
+        case "email":
+          dispatch(addEmail(value?.email));
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   return (
     <Stack spacing={{ xs: 2 }}>
-      <FastField as={TextField} label="Name" variant="outlined" name="name" />
-      <FastField
-        as={TextField}
-        type="email"
-        label="Email"
-        variant="outlined"
+      <Controller
+        render={({ field }) => (
+          <TextField {...field} label="Name" variant="outlined" />
+        )}
+        control={control}
+        name="name"
+      />
+      <Controller
+        render={({ field }) => (
+          <TextField {...field} type="email" label="Email" variant="outlined" />
+        )}
+        control={control}
         name="email"
       />
-      <FastField as={TextField} label="Phone" variant="outlined" name="phone" />
-      <FastField
-        as={TextField}
-        label="Address"
-        variant="outlined"
+      <Controller
+        render={({ field }) => (
+          <TextField {...field} label="Phone" variant="outlined" />
+        )}
+        control={control}
+        name="phone"
+      />
+      <Controller
+        render={({ field }) => (
+          <TextField {...field} label="Address" variant="outlined" />
+        )}
+        control={control}
         name="address"
       />
-      <FastField
-        as={TextField}
+      <Controller
+        render={({ field }) => (
+          <TextField
+            {...field}
+            variant="outlined"
+            label="Summary"
+            multiline
+            rows={5}
+            placeholder="Summary"
+          />
+        )}
+        control={control}
         name="summary"
-        variant="outlined"
-        label="Summary"
-        multiline
-        rows={5}
-        placeholder="Summary"
       />
-      <FieldArray
-        name="websites"
-        render={(arrayHelpers) => {
-          return (
-            <Stack spacing={{ xs: 2 }}>
-              {values.websites.map((website, idx) => (
-                <Fragment key={website.url}>
-                  <FastField
-                    key={website.name}
-                    as={TextField}
-                    label="Name of website"
-                    name={`websites.${idx}.name`}
-                    variant="outlined"
-                  />
-                  <FastField
-                    key={website.url}
-                    as={TextField}
-                    label="Add URL"
-                    name={`websites.${idx}.url`}
-                    variant="outlined"
-                  />
-                </Fragment>
-              ))}
-              <Stack direction="row">
-                <Button onClick={() => arrayHelpers.push("")}>
-                  Add more websites
-                </Button>
-                {values?.websites.length > 1 && (
-                  <Button
-                    onClick={() => {
-                      arrayHelpers.pop();
-                    }}
-                  >
-                    Remove
-                  </Button>
-                )}
-              </Stack>
-            </Stack>
-          );
-        }}
-      />
+      <Stack spacing={{ xs: 2 }}>
+        {fields.map((field, idx) => (
+          <Fragment key={field.id}>
+            <Controller
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Name of website"
+                  variant="outlined"
+                />
+              )}
+              name={`websites.${idx}.name`}
+              control={control}
+            />
+            <Controller
+              render={({ field }) => (
+                <TextField {...field} label="Add URL" variant="outlined" />
+              )}
+              control={control}
+              name={`websites.${idx}.url`}
+            />
+          </Fragment>
+        ))}
+        <Stack direction="row">
+          <Button onClick={() => append({ name: "", url: "" })}>
+            Add more websites
+          </Button>
+          {values?.websites.length > 1 && (
+            <Button
+              onClick={() => {
+                remove(fields.length - 1);
+              }}
+            >
+              Remove
+            </Button>
+          )}
+        </Stack>
+      </Stack>
     </Stack>
   );
 });

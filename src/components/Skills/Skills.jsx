@@ -1,6 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { FieldArray, FastField } from "formik";
 import React, { memo, useCallback } from "react";
+import { Controller, useFieldArray } from "react-hook-form";
 
 const SkillField = React.memo(({ skill, idx }) => {
   return (
@@ -13,7 +14,13 @@ const SkillField = React.memo(({ skill, idx }) => {
   );
 });
 
-function SkillsForm({ values }) {
+function SkillsForm({ values, control }) {
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control, // control props comes from useForm (optional: if you are using FormContext)
+      name: "skills", // unique name for your Field Array
+    }
+  );
   const handlePushSkill = useCallback((arrayHelpers) => {
     arrayHelpers.push("");
   }, []);
@@ -23,30 +30,24 @@ function SkillsForm({ values }) {
   }, []);
 
   return (
-    <>
-      <FieldArray
-        name="skills"
-        render={(arrayHelpers) => {
-          return (
-            <Stack spacing={{ xs: 1 }}>
-              {values.skills.map((skill, idx) => (
-                <SkillField key={skill} skill={skill} idx={idx} />
-              ))}
-              <Stack direction="row">
-                <Button onClick={() => handlePushSkill(arrayHelpers)}>
-                  Add more skills
-                </Button>
-                {values?.skills.length > 1 && (
-                  <Button onClick={() => handlePopSkill(arrayHelpers)}>
-                    Remove
-                  </Button>
-                )}
-              </Stack>
-            </Stack>
-          );
-        }}
-      />
-    </>
+    <Stack spacing={{ xs: 1 }}>
+      {fields?.map((field, idx) => (
+        <Controller
+          key={field.id}
+          render={({ field }) => (
+            <TextField {...field} label="Add skill" variant="outlined" />
+          )}
+          control={control}
+          name={`skill.${idx}`}
+        />
+      ))}
+      <Stack direction="row">
+        <Button onClick={() => append({ skill: "" })}>Add more skills</Button>
+        {values?.skills.length > 1 && (
+          <Button onClick={() => remove(fields.length - 1)}>Remove</Button>
+        )}
+      </Stack>
+    </Stack>
   );
 }
 

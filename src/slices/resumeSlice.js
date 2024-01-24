@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const myResume = {
+export const myResume = {
   name: "Alexandra Johnson",
   address: "123 Main Street, Anytown, 12345",
   phone: "555-987-6543",
@@ -27,16 +27,20 @@ const myResume = {
     },
   ],
   skills: [
-    "HTML5",
-    "CSS3",
-    "JavaScript",
-    "React.js",
-    "Node.js",
-    "SASS",
-    "Python",
-    "Git",
+    { skill: "HTML5" },
+    { skill: "CSS3" },
+    { skill: "JavaScript" },
+    { skill: "React.js" },
+    { skill: "Node.js" },
+    { skill: "SASS" },
+    { skill: "Python" },
+    { skill: "Git" },
   ],
-  languages: ["English", "Spanish", "French"],
+  languages: [
+    { language: "English" },
+    { language: "Spanish" },
+    { language: "French" },
+  ],
   websites: [
     { name: "GitHub", url: "https://github.com/alex_j" },
     {
@@ -68,10 +72,19 @@ const myResume = {
       from: "09/2020",
       to: "05/2022",
       isCurrentlyWorking: false,
-      description: [
-        "Developed and maintained the company's website, implementing new features and resolving bugs.",
-        "Collaborated with designers to create visually appealing and user-friendly interfaces.",
-        "Ensured website responsiveness and compatibility across various browsers.",
+      descriptions: [
+        {
+          description:
+            "Developed and maintained the company's website, implementing new features and resolving bugs.",
+        },
+        {
+          description:
+            "Collaborated with designers to create visually appealing and user-friendly interfaces.",
+        },
+        {
+          description:
+            "Ensured website responsiveness and compatibility across various browsers.",
+        },
       ],
     },
   ],
@@ -92,9 +105,9 @@ const emptyState = {
   email: "",
   summary: "",
   education: [{ degree: "", fieldStudy: "", startYear: "", endYear: "" }],
-  skills: [""],
-  languages: [""],
-  websites: [""],
+  skills: [{ skill: "" }],
+  languages: [{ language: "" }],
+  websites: [{ name: "", url: "" }],
   experience: [
     {
       companyName: "",
@@ -104,7 +117,11 @@ const emptyState = {
       from: "",
       to: "",
       isCurrentlyWorking: false,
-      description: [""],
+      descriptions: [
+        {
+          description: "",
+        },
+      ],
     },
   ],
   internship: [{ company: "", from: "", to: "", summary: "" }],
@@ -123,6 +140,12 @@ export const resumeSlice = createSlice({
     addValues: (state, action) => {
       state.value = action.payload;
     },
+    addName: (state, { payload }) => {
+      state.value.name = payload;
+    },
+    addEmail: (state, { payload }) => {
+      state.value.email = payload;
+    },
     showResume: (state, action) => {
       state.showResume = action.payload;
     },
@@ -137,7 +160,13 @@ export const resumeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addValues, showResume, handlePreview, handleCurrrentlyWorking } =
-  resumeSlice.actions;
+export const {
+  addValues,
+  addName,
+  addEmail,
+  showResume,
+  handlePreview,
+  handleCurrrentlyWorking,
+} = resumeSlice.actions;
 
 export default resumeSlice.reducer;

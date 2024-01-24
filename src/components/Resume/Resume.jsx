@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export function Resume({ className }) {
   const data = useSelector((state) => state.resume.value);
+  console.log({ data });
   return (
     <Stack className={`resume ${className}`} flexDirection="row">
       <Stack
@@ -27,8 +28,8 @@ export function Resume({ className }) {
               listStyleType: "disc",
             }}
           >
-            {data.skills.map((skill, idx) => (
-              <li key={skill}>{skill}</li>
+            {data.skills.map((item, idx) => (
+              <li key={item?.skill}>{item?.skill}</li>
             ))}
           </ul>
         </Stack>
@@ -87,8 +88,8 @@ export function Resume({ className }) {
               listStyleType: "disc",
             }}
           >
-            {data.languages.map((language, idx) => (
-              <li key={language}>{language}</li>
+            {data.languages.map((item, idx) => (
+              <li key={item?.language}>{item?.language}</li>
             ))}
           </ul>
         </Stack>
@@ -131,9 +132,9 @@ export function Resume({ className }) {
                   listStyleType: "disc",
                 }}
               >
-                {item.description.map((desc, idx) => (
-                  <li style={{}} key={desc}>
-                    {desc}
+                {item.descriptions?.map((desc, idx) => (
+                  <li style={{}} key={desc?.description}>
+                    {desc?.description}
                   </li>
                 ))}
               </ul>
