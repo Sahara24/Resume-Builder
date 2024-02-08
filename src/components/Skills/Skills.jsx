@@ -30,7 +30,7 @@ function SkillsForm({ values }) {
           return (
             <Stack spacing={{ xs: 1 }}>
               {values.skills.map((skill, idx) => (
-                <SkillField key={skill} skill={skill} idx={idx} />
+                <SkillField key={idx} skill={skill} idx={idx} />
               ))}
               <Stack direction="row">
                 <Button onClick={() => handlePushSkill(arrayHelpers)}>
