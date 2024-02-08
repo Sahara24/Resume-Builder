@@ -78,7 +78,7 @@ function ExperienceForm({ values }) {
                         label="To"
                         name={`experience.${idx}.to`}
                         as={TextField}
-                        disabled={values?.experience?.[idx]?.isCurrentlyWorking}
+                        // disabled={values?.experience?.[idx]?.isCurrentlyWorking}
                       />
                     </Stack>
                     <div className="text-gray-400 mt-3 text-sm">
