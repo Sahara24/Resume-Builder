@@ -22,7 +22,7 @@ function ExperienceForm({ values }) {
               {values.experience.map((item, idx) => (
                 <Stack
                   spacing={{ xs: 1, sm: 2, md: 4 }}
-                  key={item.companyName}
+                  key={item.id}
                   sx={{
                     border: 1,
                     borderColor: "gray",
@@ -81,9 +81,13 @@ function ExperienceForm({ values }) {
                         disabled={values?.experience?.[idx]?.isCurrentlyWorking}
                       />
                     </Stack>
-                    <FormControlLabel
+                    <div className="text-gray-400 mt-3 text-sm">
+                      If currently working leave "To" field empty
+                    </div>
+                    {/* Will uncomment once fixed */}
+                    {/* <FormControlLabel
                       label="Currently Working"
-                      name="isCurrentlyWorking"
+                      name={`values?.experience?.${[idx]}?.isCurrentlyWorking`}
                       control={
                         <Checkbox
                           checked={
@@ -99,7 +103,7 @@ function ExperienceForm({ values }) {
                           }}
                         />
                       }
-                    />
+                    /> */}
                   </div>
                   <FieldArray
                     name={`experience.${idx}.description`}
@@ -110,7 +114,7 @@ function ExperienceForm({ values }) {
                           {values.experience?.[idx].description.map(
                             (description, index) => (
                               <FastField
-                                key={description}
+                                key={index}
                                 as={TextField}
                                 label="Add a point"
                                 name={`experience.${idx}.description.${index}`}
@@ -151,6 +155,7 @@ function ExperienceForm({ values }) {
                       to: "",
                       isCurrentlyWorking: false,
                       description: [],
+                      id: Date.now() * Math.random(),
                     })
                   }
                 >

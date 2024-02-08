@@ -1,6 +1,6 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { FieldArray, FastField } from "formik";
-import React, { Fragment, memo } from "react";
+import React, { memo } from "react";
 
 export const BasicDetails = memo(function BasicDetails({ values }) {
   return (
@@ -34,26 +34,34 @@ export const BasicDetails = memo(function BasicDetails({ values }) {
         render={(arrayHelpers) => {
           return (
             <Stack spacing={{ xs: 2 }}>
-              {values.websites.map((website, idx) => (
-                <Fragment key={website.url}>
-                  <FastField
-                    key={website.name}
-                    as={TextField}
-                    label="Name of website"
-                    name={`websites.${idx}.name`}
-                    variant="outlined"
-                  />
-                  <FastField
-                    key={website.url}
-                    as={TextField}
-                    label="Add URL"
-                    name={`websites.${idx}.url`}
-                    variant="outlined"
-                  />
-                </Fragment>
-              ))}
+              {values.websites.map((website, idx) => {
+                return (
+                  <Stack spacing={{ xs: 2 }} key={website.id || idx}>
+                    <FastField
+                      as={TextField}
+                      label="Name of website"
+                      name={`websites.${idx}.name`}
+                      variant="outlined"
+                    />
+                    <FastField
+                      as={TextField}
+                      label="Add URL"
+                      name={`websites.${idx}.url`}
+                      variant="outlined"
+                    />
+                  </Stack>
+                );
+              })}
               <Stack direction="row">
-                <Button onClick={() => arrayHelpers.push("")}>
+                <Button
+                  onClick={() =>
+                    arrayHelpers.push({
+                      name: "",
+                      url: "",
+                      id: Date.now() * Math.random(),
+                    })
+                  }
+                >
                   Add more websites
                 </Button>
                 {values?.websites.length > 1 && (

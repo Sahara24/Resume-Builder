@@ -16,6 +16,7 @@ const myResume = {
       institution: "Tech University",
       place: "Anytown",
       gpa: "3.8/4.0",
+      id: Date.now() * Math.random(),
     },
     {
       degree: "High School Diploma",
@@ -24,6 +25,7 @@ const myResume = {
       institution: "Anytown High School",
       place: "Anytown",
       gpa: "4.0",
+      id: Date.now() * Math.random(),
     },
   ],
   skills: [
@@ -38,14 +40,20 @@ const myResume = {
   ],
   languages: ["English", "Spanish", "French"],
   websites: [
-    { name: "GitHub", url: "https://github.com/alex_j" },
+    {
+      name: "GitHub",
+      url: "https://github.com/alex_j",
+      id: Date.now() * Math.random(),
+    },
     {
       name: "LinkedIn",
       url: "https://www.linkedin.com/in/alexandra-johnson/",
+      id: Date.now() * Math.random(),
     },
   ],
   experience: [
     {
+      id: Date.now() * Math.random(),
       companyName: "Tech Solutions Inc.",
       jobRole: "Frontend Developer",
       city: "Anytown",
@@ -61,6 +69,7 @@ const myResume = {
       ],
     },
     {
+      id: Date.now() * Math.random(),
       companyName: "Online Mart",
       jobRole: "Web Developer",
       city: "Anothercity",
@@ -131,7 +140,8 @@ export const resumeSlice = createSlice({
     },
     handleCurrrentlyWorking: (state, action) => {
       const index = action.payload?.index;
-      state.value.experience[index] = action?.payload?.isChecked;
+      state.value.experience[index].isCurrentlyWorking =
+        action?.payload?.isChecked;
     },
   },
 });

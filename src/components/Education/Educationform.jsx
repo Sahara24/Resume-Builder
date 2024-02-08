@@ -8,7 +8,7 @@ function Educationform({ values, arrayHelpers }) {
       {values.education.map((item, idx) => (
         <Stack
           spacing={{ xs: 1, sm: 2, md: 4 }}
-          key={item.degree}
+          key={item.id}
           sx={{
             border: 1,
             borderColor: "gray",
@@ -59,6 +59,7 @@ function Educationform({ values, arrayHelpers }) {
               fieldStudy: "",
               startYear: "",
               endYear: "",
+              id: Date.now() * Math.random(),
             })
           }
         >

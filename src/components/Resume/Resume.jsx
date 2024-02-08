@@ -119,7 +119,7 @@ export function Resume({ className }) {
                   {item.city}, {item.country}
                 </span>
                 <span>
-                  {item.from} - {item.isCurrentlyWorking ? "Current" : item.to}
+                  {item.from} - {!item.to ? "Current" : item.to}
                 </span>
               </div>
               <ul
